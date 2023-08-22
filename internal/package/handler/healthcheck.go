@@ -1,4 +1,4 @@
-package handlers
+package handler
 
 import (
 	"bp-ms-accounts/domain/entities"
@@ -10,8 +10,10 @@ type accounts struct {
 	configs map[string]string
 }
 
-func NewService(configs map[string]string) service.Service { return &accounts{configs: configs} }
+func NewAccountsService(configs map[string]string) service.Service {
+	return &accounts{configs: configs}
+}
 
-func (a *accounts) HealthCheck(w http.ResponseWriter, r *http.Request) {
+func (a *accounts) Resolver(w http.ResponseWriter, r *http.Request) {
 	entities.AccountsAnswer(http.StatusAccepted, "Connection healthy", w)
 }
