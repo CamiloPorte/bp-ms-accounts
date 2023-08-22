@@ -3,11 +3,11 @@ package main
 import (
 	"bp-ms-accounts/cmd/conf"
 	"bp-ms-accounts/domain/consts"
-	"fmt"
-	"log"
 	"net/http"
 
-	handlers "bp-ms-accounts/internal/package/handler"
+	"github.com/labstack/gommon/log"
+
+	"bp-ms-accounts/internal/package/handler"
 	"bp-ms-accounts/internal/package/service"
 )
 
@@ -18,9 +18,14 @@ func main() {
 		return
 	}
 
-	services := handlers.NewService(configs)
+	services := map[string]service.Service{
+		consts.Healthcheck: handler.NewAccountsService(configs),
+		consts.HelloWorld:  handler.NewHelloWorldService(configs),
+	}
+
 	s := service.New(services)
-	fmt.Println("servidor creado correctamente")
+
+	log.Info("servidor creado correctamente")
 
 	log.Fatal(http.ListenAndServe(configs[consts.PortConst], s.Router()))
 }

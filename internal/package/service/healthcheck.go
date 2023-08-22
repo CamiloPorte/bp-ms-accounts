@@ -1,31 +1,33 @@
 package service
 
 import (
+	"bp-ms-accounts/domain/consts"
 	"net/http"
 
 	"github.com/gorilla/mux"
 )
 
 type Service interface {
-	HealthCheck(w http.ResponseWriter, r *http.Request)
+	Resolver(w http.ResponseWriter, r *http.Request)
 }
 
 type api struct {
 	router  http.Handler
-	service Service
+	service map[string]Service
 }
 
 type Server interface {
 	Router() http.Handler
 }
 
-func New(service Service) Server {
+func New(service map[string]Service) Server {
 	a := &api{
 		service: service,
 	}
 
 	r := mux.NewRouter()
-	r.HandleFunc("/healthcheck", a.service.HealthCheck).Methods(http.MethodGet)
+	r.HandleFunc("/healthcheck", a.service[consts.Healthcheck].Resolver).Methods(http.MethodGet)
+	r.HandleFunc("/", a.service[consts.HelloWorld].Resolver).Methods(http.MethodGet)
 	a.router = r
 	return a
 }

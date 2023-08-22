@@ -6,14 +6,14 @@ import (
 	"net/http"
 )
 
-type accounts struct {
+type helloWorld struct {
 	configs map[string]string
 }
 
-func NewAccountsService(configs map[string]string) service.Service {
-	return &accounts{configs: configs}
+func NewHelloWorldService(configs map[string]string) service.Service {
+	return &helloWorld{configs: configs}
 }
 
-func (a *accounts) Resolver(w http.ResponseWriter, r *http.Request) {
+func (h *helloWorld) Resolver(w http.ResponseWriter, r *http.Request) {
 	entities.AccountsAnswer(http.StatusAccepted, "Connection healthy", w)
 }
