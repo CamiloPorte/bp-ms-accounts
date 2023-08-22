@@ -4,6 +4,8 @@ import (
 	"bp-ms-accounts/domain/entities"
 	"bp-ms-accounts/internal/package/service"
 	"net/http"
+
+	"github.com/labstack/gommon/log"
 )
 
 type helloWorld struct {
@@ -15,5 +17,6 @@ func NewHelloWorldService(configs map[string]string) service.Service {
 }
 
 func (h *helloWorld) Resolver(w http.ResponseWriter, r *http.Request) {
-	entities.AccountsAnswer(http.StatusAccepted, "hola compañero", w)
+	log.Info("se solicito saludo")
+	entities.AccountsAnswer(http.StatusAccepted, "hola compañero!", w)
 }
