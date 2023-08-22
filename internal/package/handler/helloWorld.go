@@ -15,5 +15,5 @@ func NewHelloWorldService(configs map[string]string) service.Service {
 }
 
 func (h *helloWorld) Resolver(w http.ResponseWriter, r *http.Request) {
-	entities.AccountsAnswer(http.StatusAccepted, "hola compañero", w)
+	entities.AccountsAnswer(http.StatusAccepted, "hello world", w)
 }
